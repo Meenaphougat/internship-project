@@ -1,0 +1,42 @@
+from selenium.webdriver.common.by import By
+from behave import given, when, then
+from time import sleep
+
+
+CLICK_SAVE = (By.XPATH, "//div[contains(text(), 'Save changes')]")
+CLICK_CLOSE = (By.XPATH, "//div[contains(@class, 'profile-button-block') and contains(., 'Close')]")
+CLICK_SETTINGS = (By.XPATH, "//div[contains(@class, 'menu-button-text') and text()='Settings']")
+CLICK_EDIT_PROFILE = (By.XPATH, "//div[contains(@class, 'setting-text') and text()='Edit profile']")
+INPUT_FIELD_JOIN_COMP = (By.ID, "When-joined-company-2")
+
+
+@then('Click on settings open')
+def click_on_settings(context):
+    context.app.base_page.wait_until_clickable(*CLICK_SETTINGS)
+
+
+@then('Click on Edit profile option')
+def edit_profile(context):
+    context.app.base_page.wait_until_clickable(*CLICK_EDIT_PROFILE)
+
+
+@when('Enter some test information in the input fields')
+def input_fields(context):
+    context.app.edit_profile_page.input_fields()
+    sleep(3)
+
+
+@then('Check the right information is present in the input fields')
+def verify_input_fields(context):
+    context.app.edit_profile_page.verify_input_fields()
+
+
+@then('Click on Save changes')
+def click_on_save(context):
+    context.app.base_page.wait_until_clickable(*CLICK_SAVE)
+
+
+@then('Click on Close')
+def click_on_save(context):
+    context.app.base_page.wait_until_clickable(*CLICK_CLOSE)
+
