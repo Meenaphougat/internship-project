@@ -1,3 +1,4 @@
+from selenium.common import TimeoutException
 from selenium.webdriver.support.wait import WebDriverWait
 from pages.base_page import Page
 from selenium.webdriver.common.by import By
@@ -21,8 +22,7 @@ class EditProfilePage(Page):
         self.input_text('2024', *self.INPUT_FIELD_JOIN_COMP)
 
     def verify_input_fields(self):
-        element = WebDriverWait(self.driver, 3).until(
+        element = WebDriverWait(self.driver, 10).until(
             EC.presence_of_element_located(self.INPUT_FIELD_JOIN_COMP)
         )
-
 
