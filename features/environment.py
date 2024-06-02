@@ -13,11 +13,6 @@ from app.application import Application
 from support.logger import logger
 
 
-#  How to Run Behave tests with Allure results
-# behave -f allure_behave.formatter:AllureFormatter -o test_results/ features/tests/target_app_ui_tests.feature
-# If we want to use tags
-# behave -f allure_behave.formatter:AllureFormatter -o test_results/ -t smoke
-
 def browser_init(context, scenario_name):
     """
     :param context: Behave context
@@ -27,41 +22,34 @@ def browser_init(context, scenario_name):
     # service = Service(driver_path)
     # context.driver = webdriver.Chrome(service=service)
 
-    # Firefox browser mode
-    # driver_path = GeckoDriverManager().install()
-    # service = Service(driver_path)
-    # context.driver = webdriver.Firefox(service=service)
+    #Firefox browser mode
+    gecko_driver_path = GeckoDriverManager().install()
+    options = webdriver.FirefoxOptions()
+    options.headless = True  # Run Firefox in headless mode (optional)
+    # Customize additional Firefox options as needed
+    options.add_argument('--disable-infobars')
+    options.add_argument('--disable-extensions')
+    service = Service(gecko_driver_path)
+    context.driver = webdriver.Firefox(service=service, options=options)
 
-    ## HEADLESS MODE ####
-    options = webdriver.ChromeOptions()
-    options.add_argument('headless')
-    options.add_argument('--window-size=1920,1080')
-    service = Service(ChromeDriverManager().install())
-    context.driver = webdriver.Chrome(
-        options=options,
-        service=service
-    )
+    # # HEADLESS MODE ####
+    # options = webdriver.ChromeOptions()
+    # options.add_argument('headless')
+    # options.add_argument('--window-size=1920,1080')
+    # service = Service(ChromeDriverManager().install())
+    # context.driver = webdriver.Chrome(
+    #     options=options,
+    #     service=service
+    # )
 
     context.driver.maximize_window()
-
-    context.driver.maximize_window()
-    context.driver.implicitly_wait(4)
+    # context.driver.implicitly_wait(4)
     context.wait = WebDriverWait(context.driver, timeout=15)
 
     context.app = Application(context.driver)
 
 
-# Adding this for Firefox browser only#####
-@fixture
-def selenium_browser_firefox(context):
-    context.driver = webdriver.Firefox()
-    yield context.driver
-    context.driver.quit()
-
-
 def before_scenario(context, scenario):
-    # Adding this for Firefox browser only######
-    use_fixture(selenium_browser_firefox, context)
     logger.info(f'Started scenario: {scenario.name}')
     browser_init(context, scenario.name)
 

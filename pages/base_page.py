@@ -26,12 +26,16 @@ class Page:
         logger.info(f'Clicking by {locator}')
         self.find_element(*locator).click()
 
+    # def input_text(self, text, *locator):
+    #     element = WebDriverWait(self.driver, 10).until(
+    #         EC.visibility_of_element_located(locator)
+    #     )
+    #     element.clear()
+    #     element.send_keys(text)
+
+    # adding to resolve some issue in firefox
     def input_text(self, text, *locator):
-        element = WebDriverWait(self.driver, 10).until(
-            EC.visibility_of_element_located(locator)
-        )
-        element.clear()
-        element.send_keys(text)
+        self.find_element(*locator).send_keys(text)
 
     def wait_until_clickable(self, *locator):
         self.wait.until(

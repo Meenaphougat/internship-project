@@ -5,7 +5,6 @@ from time import sleep
 
 CLICK_SAVE = (By.XPATH, "//div[contains(text(), 'Save changes')]")
 CLICK_CLOSE = (By.XPATH, "//div[contains(@class, 'profile-button-block') and contains(., 'Close')]")
-CLICK_SETTINGS = (By.XPATH, "//div[contains(@class, 'menu-button-text') and text()='Settings']")
 #CLICK_EDIT_PROFILE = (By.XPATH, "//div[contains(@class, 'setting-text') and text()='Edit profile']")
 CLICK_EDIT_PROFILE = (By.XPATH, "//a[@href='/profile-edit' and contains(@class, 'page-setting-block')]")
 INPUT_FIELD_JOIN_COMP = (By.ID, "When-joined-company-2")
@@ -13,7 +12,7 @@ INPUT_FIELD_JOIN_COMP = (By.ID, "When-joined-company-2")
 
 @then('Click on settings open')
 def click_on_settings(context):
-    context.app.base_page.wait_until_clickable(*CLICK_SETTINGS)
+    context.app.edit_profile_page.click_setting_options()
 
 
 @then('Click on Edit profile option')
