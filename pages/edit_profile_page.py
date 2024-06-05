@@ -35,18 +35,6 @@ class EditProfilePage(Page):
         # Optionally, add a sleep if necessary
         sleep(5)
 
-    # def input_fields(self):
-    #     WebDriverWait(self.driver, 10).until(
-    #         EC.visibility_of_element_located(self.INPUT_FIELD_JOIN_COMP)
-    #     )
-    #     self.input_text('2024', *self.INPUT_FIELD_JOIN_COMP)
-    #     sleep(10)  # Sleeping for 10 seconds after interacting with the input field
-
-    # def verify_input_fields(self):
-    #     element = WebDriverWait(self.driver, 10).until(
-    #         EC.presence_of_element_located(self.INPUT_FIELD_JOIN_COMP)
-    #     )
-
     # Adding for Firefox instead of above
     def verify_input_fields(self):
         input_value = '2024'
