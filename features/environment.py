@@ -41,20 +41,10 @@ def browser_init(context, scenario_name):
     # context.driver = webdriver.Firefox(service=service, options=options)
 
     ### MOBILE WEB TESTING
-    # For Custom screen Pixel size in mobile testing
-    mobile_emulation = {
-        "deviceMetrics": {
-            "width": 384,  # Replace with your custom width
-            "height": 578,  # Replace with your custom height
-            "pixelRatio": 3  # Replace with your custom pixel ratio
-        },
-        "userAgent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.1 Mobile/15E148 Safari/604.1"
-    }
-
     # With Device name Testing of Mobile on Web
-    # mobile_emulation = {
-    #     "deviceName": "iPhone SE"  # You can use other device names as well
-    # }
+    mobile_emulation = {
+        "deviceName": "iPhone SE"  # We can use other device names as well
+    }
 
     # Chrome options
     chrome_options = webdriver.ChromeOptions()
