@@ -15,7 +15,7 @@ class SignInPage(Page):
 
     def click_sign_in(self):
         self.click(*self.CONTINUE_BUTTON)
-        sleep(5)
+        sleep(10)
 
     def input_credentials(self):
         self.input_text('meenaphougat23@gmail.com', *self.RELLY_EMAIL)

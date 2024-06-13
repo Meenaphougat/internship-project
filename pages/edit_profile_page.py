@@ -12,10 +12,12 @@ class EditProfilePage(Page):
     INPUT_FIELD = (By.XPATH, "//input[contains(@class, 'field-form-block w-input') and contains(@name, 'Languages')]")
     INPUT_FIELD_JOIN_COMP = (By.CSS_SELECTOR, "input#When-joined-company-2")
     CLICK_SETTINGS = (By.XPATH, "//div[contains(@class, 'menu-button-text') and text()='Settings']")
+    CLICK_SETTING_MENU = (By.XPATH, "//div[@class='mobile-top-menu']")
+    CLICK_SAVE = (By.XPATH, "//div[contains(text(), 'Save changes')]")
+    CLICK_CLOSE = (By.XPATH, "//div[contains(@class, 'profile-button') and contains(., 'Close')]")
 
     def __init__(self, driver):
         super().__init__(driver)
-        #self.default_pw = 'Password'
 
     def input_fields(self):
         try:
@@ -48,6 +50,21 @@ class EditProfilePage(Page):
 
     def click_setting_options(self):
         setting_options_button = WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(
-            self.CLICK_SETTINGS))
+            self.CLICK_SETTING_MENU))
         setting_options_button.click()
         sleep(10)
+
+    def click_save_changes(self):
+        # Get the second element that matches the XPath
+        elements = self.driver.find_elements(*self.CLICK_SAVE)
+        if len(elements) > 1:
+            elements[1].click()
+        else:
+            raise Exception("Button was not found on page.")
+
+    def click_close_button(self):
+        elements = self.driver.find_elements(*self.CLICK_CLOSE)
+        if len(elements) > 1:
+            elements[1].click()
+        else:
+            raise Exception("CLose button not visible")

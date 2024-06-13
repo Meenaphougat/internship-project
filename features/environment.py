@@ -1,6 +1,7 @@
 from allure_commons import fixture
 from behave import use_fixture
 from selenium import webdriver
+from selenium.webdriver import ActionChains, Keys
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.support.wait import WebDriverWait
 from webdriver_manager.chrome import ChromeDriverManager
@@ -25,9 +26,9 @@ def browser_init(context, scenario_name):
     # allure serve test_results/
 
     # Chrome browser mode
-    driver_path = ChromeDriverManager().install()
-    service = Service(driver_path)
-    context.driver = webdriver.Chrome(service=service)
+    # driver_path = ChromeDriverManager().install()
+    # service = Service(driver_path)
+    # context.driver = webdriver.Chrome(service=service)
 
     # Firefox browser mode
     # gecko_driver_path = GeckoDriverManager().install()
@@ -38,6 +39,34 @@ def browser_init(context, scenario_name):
     # options.add_argument('--disable-extensions')
     # service = Service(gecko_driver_path)
     # context.driver = webdriver.Firefox(service=service, options=options)
+
+    ### MOBILE WEB TESTING
+    # For Custom screen Pixel size in mobile testing
+    mobile_emulation = {
+        "deviceMetrics": {
+            "width": 384,  # Replace with your custom width
+            "height": 578,  # Replace with your custom height
+            "pixelRatio": 3  # Replace with your custom pixel ratio
+        },
+        "userAgent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.1 Mobile/15E148 Safari/604.1"
+    }
+
+    # With Device name Testing of Mobile on Web
+    # mobile_emulation = {
+    #     "deviceName": "iPhone SE"  # You can use other device names as well
+    # }
+
+    # Chrome options
+    chrome_options = webdriver.ChromeOptions()
+    chrome_options.add_experimental_option("mobileEmulation", mobile_emulation)
+    driver_path = ChromeDriverManager().install()
+    service = Service(driver_path)
+    context.driver = webdriver.Chrome(service=service, options=chrome_options)
+    context.driver.execute_script("document.body.style.zoom='50%'")
+
+    context.driver.maximize_window()
+    context.driver.implicitly_wait(4)
+    context.app = Application(context.driver)
 
     # # HEADLESS MODE ####
     # options = webdriver.ChromeOptions()
@@ -65,11 +94,11 @@ def browser_init(context, scenario_name):
     # options.set_capability('bstack:options', bstack_options)
     # context.driver = webdriver.Remote(command_executor=url, options=options)
 
-    context.driver.maximize_window()
-    # context.driver.implicitly_wait(4)
-    context.wait = WebDriverWait(context.driver, timeout=15)
-
-    context.app = Application(context.driver)
+    # context.driver.maximize_window()
+    # # context.driver.implicitly_wait(4)
+    # context.wait = WebDriverWait(context.driver, timeout=15)
+    #
+    # context.app = Application(context.driver)
 
 
 def before_scenario(context, scenario):
